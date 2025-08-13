@@ -35,7 +35,7 @@
             const output = document.getElementById('output');
             output.innerHTML = '';
             try {
-                const response = await fetch('http://192.168.49.2:30007/generate-primes', {
+                const response = await fetch('http://prime-api-service:30007/generate-primes', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ limit: Number(limit) })
