@@ -15,6 +15,7 @@ spec:
       containers:
       - name: prime-client
         image: prime-client:latest
+        imagePullPolicy: Never 
         ports:
         - containerPort: 80
 ---
