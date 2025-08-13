@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Number Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6fa; margin: 0; padding: 0; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 32px; }
+        h1 { text-align: center; color: #333; }
+        label { display: block; margin-bottom: 8px; color: #555; }
+        input[type="number"] { width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 10px; background: #0078d7; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #005fa3; }
+        .result, .error { margin-top: 20px; padding: 12px; border-radius: 4px; }
+        .result { background: #e6ffed; color: #256029; }
+        .error { background: #ffe6e6; color: #a12622; }
+        pre { white-space: pre-wrap; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prime Number Generator</h1>
+        <form id="primeForm">
+            <label for="limit">Enter upper limit:</label>
+            <input type="number" id="limit" name="limit" min="2" max="1000000" required>
+            <button type="submit">Generate Primes</button>
+        </form>
+        <div id="output"></div>
+    </div>
+    <script>
+        document.getElementById('primeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const limit = document.getElementById('limit').value;
+            const output = document.getElementById('output');
+            output.innerHTML = '';
+            try {
+                const response = await fetch('http://prime-api-service:5000/generate-primes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ limit: Number(limit) })
+                });
+                const data = await response.json();
+                if (data.error) {
+                    output.innerHTML = `<div class='error'>${data.error}</div>`;
+                } else {
+                    output.innerHTML = `<div class='result'><strong>Primes:</strong><br><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+                }
+            } catch (err) {
+                output.innerHTML = `<div class='error'>Failed to connect to API: ${err.message}</div>`;
+            }
+        });
+    </script>
+</body>
+</html>

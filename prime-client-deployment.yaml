@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prime-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prime-client
+  template:
+    metadata:
+      labels:
+        app: prime-client
+    spec:
+      containers:
+      - name: prime-client
+        image: prime-client:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prime-client-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: prime-client
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
