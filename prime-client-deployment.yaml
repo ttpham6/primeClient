@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prime-client
+  name: prime-client-deployment
 spec:
   replicas: 1
   selector:
