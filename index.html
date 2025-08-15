@@ -35,11 +35,15 @@
             const output = document.getElementById('output');
             output.innerHTML = '';
             try {
-                const response = await fetch('http://api-service:5000/generate-primes', {
+                const response = await fetch('http://192.168.49.2:30000/generate-primes', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ limit: Number(limit) })
                 });
+                
+
+
+                
                 const data = await response.json();
                 if (data.error) {
                     output.innerHTML = `<div class='error'>${data.error}</div>`;
